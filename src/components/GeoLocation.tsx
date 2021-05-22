@@ -9,12 +9,16 @@ import {
 } from 'react-leaflet';
 import bbox from '@turf/bbox';
 import { LatLngBoundsLiteral } from 'leaflet';
+import ErrorBoundary from './ErrorBounday';
+import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert';
+import { Box } from '@chakra-ui/react';
 
 interface GeoLocationProps {
   code: string;
 }
 
 export const GeoLocation: React.FC<GeoLocationProps> = ({ code }) => {
+  const [error, setError] = useState<Error | null>(null);
   const [geoData, setGeoData] = useState<GeoJsonObject>(
     defaultGeo as GeoJsonObject
   );
@@ -23,29 +27,42 @@ export const GeoLocation: React.FC<GeoLocationProps> = ({ code }) => {
     [-10.05139, 159.101898],
   ]);
   useEffect(() => {
-    import(`../resources/data/${code}.geo.json`).then((module) => {
-      const data = module.default;
+    import(`../resources/data/${code}.geo.json`)
+      .then((module) => {
+        const data = module.default;
 
-      const bboxArray = bbox(data);
-      const corner1: [number, number] = [bboxArray[1], bboxArray[0]];
-      const corner2: [number, number] = [bboxArray[3], bboxArray[2]];
+        const bboxArray = bbox(data);
+        const corner1: [number, number] = [bboxArray[1], bboxArray[0]];
+        const corner2: [number, number] = [bboxArray[3], bboxArray[2]];
 
-      setGeoData(data as GeoJsonObject);
-      setBounds([corner1, corner2]);
-    });
+        setGeoData(data as GeoJsonObject);
+        setBounds([corner1, corner2]);
+      })
+      .catch((error) => setError(error));
   }, [code]);
 
+  if (error)
+    return (
+      <Alert status={'error'}>
+        <AlertIcon />
+        <Box>Some Error occured while displaying location</Box>
+        <AlertDescription display={'block'}>{error.message}</AlertDescription>
+      </Alert>
+    );
+
   return (
-    <MapContainer
-      key={JSON.stringify(bounds)}
-      style={{ height: '80vh' }}
-      bounds={bounds}
-    >
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <GeoJSONComponent data={geoData} />
-    </MapContainer>
+    <ErrorBoundary>
+      <MapContainer
+        key={JSON.stringify(bounds)}
+        style={{ height: '80vh' }}
+        bounds={bounds}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <GeoJSONComponent data={geoData} />
+      </MapContainer>
+    </ErrorBoundary>
   );
 };

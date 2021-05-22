@@ -4,14 +4,21 @@ import theme from '../theme';
 import { ToggleColorMode } from '../components/ToggleColorMode';
 import { Flag } from '../components/Flag';
 import { GeoLocation } from '../components/GeoLocation';
+import ErrorBoundary from '../components/ErrorBounday';
 
 export const App: React.FC = () => {
   return (
     <ChakraProvider>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <ToggleColorMode />
-      <Flag code={'ind'} />
-      <GeoLocation code={'ind'} />
+      <ErrorBoundary>
+        <ToggleColorMode />
+        {['aus', 'ind', 'swe', 'eew'].map((country) => (
+          <div key={country}>
+            <Flag code={country} />
+            <GeoLocation code={country} />
+          </div>
+        ))}
+      </ErrorBoundary>
     </ChakraProvider>
   );
 };
