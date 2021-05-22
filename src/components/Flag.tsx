@@ -13,7 +13,7 @@ export const Flag: React.FC<FlagProps> = ({ code }) => {
   }, [code]);
 
   return (
-    <Box w="100">
+    <Box w="100%" h="auto">
       <Image src={image} alt={`${code}-img`} />
     </Box>
   );
