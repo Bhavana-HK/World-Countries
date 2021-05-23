@@ -49,19 +49,22 @@ export const InfiniteRoll: React.FC = () => {
   });
 
   return (
-    <Box>
-        {isFlag ? (
-          <div {...handlers}>
+    <Box pb={8} minH={'90vh'}>
+      {isFlag ? (
+        <div {...handlers}>
           <Container maxW="container.md">
             <Wrapper pt={8}>
               <Flag code={countryCodes[countryIndexes[indexPointer]]} />
             </Wrapper>
           </Container>
-          </div>
-        ) : (
-          <Country countryIdx={countryIndexes[indexPointer]} handlers={handlers}/>
-        )}
-      
+        </div>
+      ) : (
+        <Country
+          countryIdx={countryIndexes[indexPointer]}
+          handlers={handlers}
+        />
+      )}
+
       <Container maxW="container.md">
         <Flex p={4} mb={5}>
           <ToggleColorMode />
