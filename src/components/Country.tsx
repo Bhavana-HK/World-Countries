@@ -93,8 +93,8 @@ export const Country: React.FC<CountryProps> = ({ countryIdx, handlers }) => {
             <Flag code={country.cca3.toLowerCase()} />
           </Wrapper>
         </div>
-        <Wrapper borderRadius={'md'}>
-          <div style={{ touchAction: 'none' }}>
+        <Wrapper borderRadius={'md'} paddingX={5}>
+          <div style={{ touchAction: 'none'}}>
             <GeoLocation code={country.cca3.toLowerCase()} />
           </div>
         </Wrapper>

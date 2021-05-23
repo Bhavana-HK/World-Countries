@@ -10,15 +10,12 @@ import { Wrapper } from '../components/Wrapper';
 import { countryCodes } from '../resources/countryCodes';
 import { shuffle } from '../utils/shuffle';
 import { ContextActionButton } from '../components/ContextActionButton';
+import { independantCountryIndexs } from '../resources/indCountryIdx';
 
 export const InfiniteRoll: React.FC = () => {
   const [indexPointer, setIndexPointer] = useState(0);
   const [isFlag, setIsFlag] = useState(true);
-  const countryIndexes = useMemo(() => {
-    const range = Array.apply(null, Array(countryCodes.length));
-    const indexes = range.map((_value, index) => index);
-    return shuffle(indexes);
-  }, []);
+  const countryIndexes = useMemo(() => shuffle(independantCountryIndexs), []);
 
   const handleNext = () => {
     if (!isFlag)

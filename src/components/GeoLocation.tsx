@@ -53,7 +53,7 @@ export const GeoLocation: React.FC<GeoLocationProps> = ({ code }) => {
 
   if (loading)
     return (
-      <Skeleton height="90vh" />
+      <Skeleton height="85vh" />
     );
 
   if (error)
@@ -69,7 +69,7 @@ export const GeoLocation: React.FC<GeoLocationProps> = ({ code }) => {
     <ErrorBoundary>
       <MapContainer
         key={JSON.stringify(bounds)}
-        style={{ height: '90vh'}}
+        style={{ height: '85vh'}}
         bounds={bounds}
       >
         <TileLayer
