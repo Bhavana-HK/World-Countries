@@ -1,33 +1,20 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import {
   Box,
-  Button,
-  ButtonProps,
   Container,
   SimpleGrid,
-  useColorMode,
+  Flex,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useMemo } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { Country } from 'src/components/Country';
+import { ToggleColorMode } from 'src/components/ToggleColorMode';
 import { Flag } from '../components/Flag';
 import { Wrapper } from '../components/Wrapper';
 import { countryCodes } from '../resources/countryCodes';
 import { shuffle } from '../utils/shuffle';
-
-const ContextActionButton: React.FC<ButtonProps> = (props) => {
-  const { colorMode } = useColorMode();
-  return (
-    <Button
-      bg={colorMode === 'light' ? 'cyan.100' : 'cyan.800'}
-      _hover={{ bg: colorMode === 'light' ? 'cyan.300' : 'cyan.600' }}
-      {...props}
-    >
-      {props.children}
-    </Button>
-  );
-};
+import { ContextActionButton } from '../components/ContextActionButton';
 
 export const InfiniteRoll: React.FC = () => {
   const [indexPointer, setIndexPointer] = useState(0);
@@ -65,13 +52,12 @@ export const InfiniteRoll: React.FC = () => {
       handlePrev();
     },
   });
-
   return (
     <Box>
       <div {...handlers}>
         {isFlag ? (
           <Container maxW="container.md">
-            <Wrapper>
+            <Wrapper pt={8}>
               <Flag code={countryCodes[countryIndexes[indexPointer]]} />
             </Wrapper>
           </Container>
@@ -80,15 +66,18 @@ export const InfiniteRoll: React.FC = () => {
         )}
       </div>
       <Container maxW="container.md">
-        <SimpleGrid p={4} mb={5} columns={{ sm: 1, md: 2 }} spacing={4}>
-          <ContextActionButton onClick={handlePrev}>
-            <ArrowLeftIcon /> &nbsp;Previous
-          </ContextActionButton>
-          <ContextActionButton onClick={handleNext}>
-            {isFlag ? 'Reveal Country' : 'Next'} &nbsp;
-            <ArrowRightIcon />
-          </ContextActionButton>
-        </SimpleGrid>
+        <Flex p={4} mb={5} >
+          <ToggleColorMode />
+          <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={4} flex={1}>
+            <ContextActionButton onClick={handlePrev}>
+              <ArrowLeftIcon /> &nbsp;Previous
+            </ContextActionButton>
+            <ContextActionButton onClick={handleNext}>
+              {isFlag ? 'Reveal Country' : 'Next'} &nbsp;
+              <ArrowRightIcon />
+            </ContextActionButton>
+          </SimpleGrid>
+        </Flex>
       </Container>
     </Box>
   );
