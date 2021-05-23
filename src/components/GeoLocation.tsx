@@ -69,7 +69,7 @@ export const GeoLocation: React.FC<GeoLocationProps> = ({ code }) => {
     <ErrorBoundary>
       <MapContainer
         key={JSON.stringify(bounds)}
-        style={{ height: '90vh' }}
+        style={{ height: '90vh'}}
         bounds={bounds}
       >
         <TileLayer

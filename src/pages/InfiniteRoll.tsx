@@ -1,13 +1,8 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Container,
-  SimpleGrid,
-  Flex,
-} from '@chakra-ui/react';
+import { Box, Container, SimpleGrid, Flex } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useMemo } from 'react';
-import { useSwipeable } from 'react-swipeable';
+import { SwipeableHandlers, useSwipeable } from 'react-swipeable';
 import { Country } from 'src/components/Country';
 import { ToggleColorMode } from 'src/components/ToggleColorMode';
 import { Flag } from '../components/Flag';
@@ -42,7 +37,7 @@ export const InfiniteRoll: React.FC = () => {
     setIsFlag(true);
   };
 
-  const handlers = useSwipeable({
+  const handlers: SwipeableHandlers = useSwipeable({
     onSwipedLeft: (eventData) => {
       console.log('User Swiped!', eventData);
       handleNext();
@@ -52,21 +47,23 @@ export const InfiniteRoll: React.FC = () => {
       handlePrev();
     },
   });
+
   return (
     <Box>
-      <div {...handlers}>
         {isFlag ? (
+          <div {...handlers}>
           <Container maxW="container.md">
             <Wrapper pt={8}>
               <Flag code={countryCodes[countryIndexes[indexPointer]]} />
             </Wrapper>
           </Container>
+          </div>
         ) : (
-          <Country countryIdx={countryIndexes[indexPointer]} />
+          <Country countryIdx={countryIndexes[indexPointer]} handlers={handlers}/>
         )}
-      </div>
+      
       <Container maxW="container.md">
-        <Flex p={4} mb={5} >
+        <Flex p={4} mb={5}>
           <ToggleColorMode />
           <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={4} flex={1}>
             <ContextActionButton onClick={handlePrev}>

@@ -10,6 +10,7 @@ import {
   Grid,
   useColorMode,
 } from '@chakra-ui/react';
+
 import React from 'react';
 import countries from '../resources/countries';
 import { GeoLocation } from './GeoLocation';
@@ -21,17 +22,20 @@ import { LanguagesComponent } from './LanguagesComponent';
 import { DomainsComponent } from './DomainsComponent';
 import { RegionComponent } from './RegionComponent';
 import { BorderCountries } from './BorderCountries';
+import { SwipeableHandlers } from 'react-swipeable';
 
 interface CountryProps {
   countryIdx: number;
+  handlers?: SwipeableHandlers;
 }
 
-export const Country: React.FC<CountryProps> = ({ countryIdx }) => {
+export const Country: React.FC<CountryProps> = ({ countryIdx, handlers }) => {
   const { colorMode } = useColorMode();
   const country: CountryType = countries[countryIdx];
   const flag = country.flag.replace(/\u([0-9A-F]{4})/gi, (_, g) =>
     String.fromCharCode(parseInt(`0x${g}`))
   );
+
   return (
     <Box p={4}>
       <Wrapper>
@@ -40,7 +44,7 @@ export const Country: React.FC<CountryProps> = ({ countryIdx }) => {
         </Text>
       </Wrapper>
       <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={4}>
-        <Box>
+        <div {...handlers}>
           <Wrapper textAlign={'center'}>
             <Box
               bg={colorMode === 'light' ? 'cyan.100' : 'cyan.700'}
@@ -88,9 +92,11 @@ export const Country: React.FC<CountryProps> = ({ countryIdx }) => {
           <Wrapper borderRadius={'md'}>
             <Flag code={country.cca3.toLowerCase()} />
           </Wrapper>
-        </Box>
+        </div>
         <Wrapper borderRadius={'md'}>
-          <GeoLocation code={country.cca3.toLowerCase()} />
+          <div style={{ touchAction: 'none' }}>
+            <GeoLocation code={country.cca3.toLowerCase()} />
+          </div>
         </Wrapper>
       </SimpleGrid>
     </Box>
