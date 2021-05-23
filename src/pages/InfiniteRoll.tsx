@@ -72,7 +72,7 @@ export const InfiniteRoll: React.FC = () => {
             <ContextActionButton onClick={handlePrev}>
               <ArrowLeftIcon /> &nbsp;Previous
             </ContextActionButton>
-            <ContextActionButton onClick={handleNext}>
+            <ContextActionButton onClick={handleNext} primary>
               {isFlag ? 'Reveal Country' : 'Next'} &nbsp;
               <ArrowRightIcon />
             </ContextActionButton>
