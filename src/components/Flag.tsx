@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, AlertDescription, AlertIcon, Box, Image } from '@chakra-ui/react';
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Image,
+  Skeleton,
+} from '@chakra-ui/react';
 import ErrorBoundary from './ErrorBounday';
 interface FlagProps {
   code: string;
@@ -8,26 +14,37 @@ interface FlagProps {
 export const Flag: React.FC<FlagProps> = ({ code }) => {
   const [error, setError] = useState<Error | null>(null);
   const [image, setImage] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
-    import(`../resources/data/${code}.svg`).then((img) =>
-      setImage(img.default)
-    ).catch((error)=>  setError(error));
+    setLoading(true);
+    import(`../resources/data/${code}.svg`)
+      .then((img) => {
+        setImage(img.default);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
   }, [code]);
 
+  if (loading)
+    return (
+      <Skeleton height="100px" />
+    );
+
   if (error)
-  return (
-    <Alert status={'error'}>
-      <AlertIcon />
-      Some Error occured while displaying flag
-      <AlertDescription display="block">{error.message}</AlertDescription>
-    </Alert>
-  );
+    return (
+      <Alert status={'error'}>
+        <AlertIcon />
+        Some Error occured while displaying flag
+        <AlertDescription display="block">{error.message}</AlertDescription>
+      </Alert>
+    );
 
   return (
     <ErrorBoundary>
-      <Box w="100%" h="auto">
-        <Image src={image} alt={`${code}-img`} />
-      </Box>
+      <Image src={image} alt={`${code}-img`} w="100%" h="auto" />
     </ErrorBoundary>
   );
 };

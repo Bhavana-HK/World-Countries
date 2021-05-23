@@ -10,15 +10,20 @@ import {
 import bbox from '@turf/bbox';
 import { LatLngBoundsLiteral } from 'leaflet';
 import ErrorBoundary from './ErrorBounday';
-import { Alert, AlertDescription, AlertIcon } from '@chakra-ui/alert';
-import { Box } from '@chakra-ui/react';
-
+import {
+  Box,
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Skeleton,
+} from '@chakra-ui/react';
 interface GeoLocationProps {
   code: string;
 }
 
 export const GeoLocation: React.FC<GeoLocationProps> = ({ code }) => {
   const [error, setError] = useState<Error | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const [geoData, setGeoData] = useState<GeoJsonObject>(
     defaultGeo as GeoJsonObject
   );
@@ -27,6 +32,7 @@ export const GeoLocation: React.FC<GeoLocationProps> = ({ code }) => {
     [-10.05139, 159.101898],
   ]);
   useEffect(() => {
+    setLoading(true);
     import(`../resources/data/${code}.geo.json`)
       .then((module) => {
         const data = module.default;
@@ -37,9 +43,18 @@ export const GeoLocation: React.FC<GeoLocationProps> = ({ code }) => {
 
         setGeoData(data as GeoJsonObject);
         setBounds([corner1, corner2]);
+        setLoading(false);
       })
-      .catch((error) => setError(error));
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
   }, [code]);
+
+  if (loading)
+    return (
+      <Skeleton height="90vh" />
+    );
 
   if (error)
     return (
@@ -54,7 +69,7 @@ export const GeoLocation: React.FC<GeoLocationProps> = ({ code }) => {
     <ErrorBoundary>
       <MapContainer
         key={JSON.stringify(bounds)}
-        style={{ height: '80vh' }}
+        style={{ height: '90vh' }}
         bounds={bounds}
       >
         <TileLayer

@@ -36,7 +36,8 @@
     "jsx": "react-jsx"
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/resources"
   ],
   "include": [
     "./src/**/*.tsx",
