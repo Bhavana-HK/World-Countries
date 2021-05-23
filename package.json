@@ -2,6 +2,7 @@
   "name": "world-countries",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://Bhavana-HK.github.io/World-Countries",
   "dependencies": {
     "@chakra-ui/icons": "^1.0.13",
     "@chakra-ui/react": "^1.6.2",
@@ -22,6 +23,7 @@
     "react-dom": "^17.0.2",
     "react-leaflet": "^3.2.0",
     "react-scripts": "4.0.3",
+    "react-swipeable": "^6.1.2",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
   },
@@ -29,7 +31,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +47,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/leaflet": "^1.7.0"
+    "@types/leaflet": "^1.7.0",
+    "gh-pages": "^3.1.0"
   }
 }

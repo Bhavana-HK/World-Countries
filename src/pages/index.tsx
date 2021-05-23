@@ -5,7 +5,8 @@ import { ToggleColorMode } from '../components/ToggleColorMode';
 // import { Flag } from '../components/Flag';
 // import { GeoLocation } from '../components/GeoLocation';
 import ErrorBoundary from '../components/ErrorBounday';
-import { Country } from '../components/Country';
+// import { Country } from '../components/Country';
+import { InfiniteRoll } from './InfiniteRoll';
 
 export const App: React.FC = () => {
   return (
@@ -18,7 +19,7 @@ export const App: React.FC = () => {
             <GeoLocation code={country} />
           </div>
         ))} */}
-        <Country countryIdx={90}/>
+        <InfiniteRoll />
         <ToggleColorMode />
       </ErrorBoundary>
     </ChakraProvider>

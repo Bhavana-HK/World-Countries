@@ -30,7 +30,7 @@ export const Flag: React.FC<FlagProps> = ({ code }) => {
 
   if (loading)
     return (
-      <Skeleton height="100px" />
+      <Skeleton height="200px" />
     );
 
   if (error)

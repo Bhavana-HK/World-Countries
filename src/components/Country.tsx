@@ -1,7 +1,6 @@
 import {
   Box,
   SimpleGrid,
-  BoxProps,
   Text,
   Table,
   Tbody,
@@ -9,117 +8,23 @@ import {
   Th,
   Tr,
   Grid,
-  HStack,
-  Tag,
   useColorMode,
-  Badge,
 } from '@chakra-ui/react';
 import React from 'react';
 import countries from '../resources/countries';
 import { GeoLocation } from './GeoLocation';
-import { CountryType, Currencies, Langauages } from '../Country';
+import { CountryType } from '../Country';
 import { Flag } from './Flag';
+import { Wrapper } from './Wrapper';
+import { CurrencyComponent } from './CurrencyComponent';
+import { LanguagesComponent } from './LanguagesComponent';
+import { DomainsComponent } from './DomainsComponent';
+import { RegionComponent } from './RegionComponent';
+import { BorderCountries } from './BorderCountries';
 
 interface CountryProps {
   countryIdx: number;
 }
-
-const Wrapper: React.FC<BoxProps> = ({ children, ...props }) => {
-  return (
-    <Box m={2} p={2} {...props}>
-      {children}
-    </Box>
-  );
-};
-
-const CurrencyComponent: React.FC<{ curr: Currencies }> = ({ curr }) => {
-  const keys = Object.keys(curr);
-  return (
-    <HStack spacing={4}>
-      {keys.map((key) => (
-        <HStack spacing={4}>
-          <Tag size={'md'} key={key} variant="solid" colorScheme="cyan">
-            <Text>
-              {curr[key].name}
-              <span
-                style={{
-                  fontWeight: 'lighter',
-                  fontSize: '0.9rem',
-                  marginLeft: '0.5rem',
-                }}
-              >
-                {key}
-              </span>
-            </Text>
-          </Tag>
-          <Tag size={'md'} key={key} variant="outline" colorScheme="cyan">
-            <Text fontWeight="extrabold">{curr[key].symbol}</Text>
-          </Tag>
-        </HStack>
-      ))}
-    </HStack>
-  );
-};
-
-const LanguagesComponent: React.FC<{ lang: Langauages }> = ({ lang }) => {
-  const keys = Object.keys(lang);
-
-  return (
-    <HStack spacing={4}>
-      {keys.map((key) => (
-        <Tag size={'md'} key={key} variant="solid" colorScheme="cyan">
-          <Text>{lang[key]}</Text>
-        </Tag>
-      ))}
-    </HStack>
-  );
-};
-
-const DomainsComponent: React.FC<{ tlds: string[] }> = ({ tlds }) => {
-  return (
-    <HStack spacing={4}>
-      {tlds.map((tld) => (
-        <Badge variant="subtle" colorScheme="cyan" borderRadius={"sm"}>
-          <Text p={1}>{tld}</Text>
-        </Badge>
-      ))}
-    </HStack>
-  );
-};
-
-const RegionComponent: React.FC<{ region: string }> = ({ region }) => {
-  const { colorMode } = useColorMode();
-
-  return (
-    <Box
-      bg={colorMode === 'light' ? 'cyan.700' : 'cyan.900'}
-      py={1}
-      color={'white'}
-      textAlign={'center'}
-      borderRadius={'md'}
-    >
-      <Text textTransform={'capitalize'}>{region}</Text>
-    </Box>
-  );
-};
-
-const BorderCountries: React.FC<{ borders: string[] }> = ({ borders }) => {
-  if (!borders.length) return null;
-  return (
-    <Tr>
-      <Th>Borders</Th>
-      <Td>
-        <HStack spacing={4}>
-          {borders.map((border) => (
-            <Tag size={'md'} key={border} variant="outline" colorScheme="cyan">
-              {border}
-            </Tag>
-          ))}
-        </HStack>
-      </Td>
-    </Tr>
-  );
-};
 
 export const Country: React.FC<CountryProps> = ({ countryIdx }) => {
   const { colorMode } = useColorMode();
@@ -128,7 +33,7 @@ export const Country: React.FC<CountryProps> = ({ countryIdx }) => {
     String.fromCharCode(parseInt(`0x${g}`))
   );
   return (
-    <Box m={[4]}>
+    <Box p={4}>
       <Wrapper>
         <Text fontSize={'6xl'} fontWeight={'extrabold'}>
           {country.name.common} &nbsp; {flag}
@@ -150,7 +55,7 @@ export const Country: React.FC<CountryProps> = ({ countryIdx }) => {
             </Box>
           </Wrapper>
           <Wrapper>
-            <Table size="sm" borderRadius={'md'} boxShadow="lg">
+            <Table size="sm" borderRadius={'md'}>
               <Tbody>
                 <Tr>
                   <Th>Currency</Th>
@@ -180,14 +85,13 @@ export const Country: React.FC<CountryProps> = ({ countryIdx }) => {
               <RegionComponent region={country.subregion} />
             </Grid>
           </Wrapper>
-          <Wrapper></Wrapper>
           <Wrapper borderRadius={'md'}>
             <Flag code={country.cca3.toLowerCase()} />
           </Wrapper>
         </Box>
-        <Box borderRadius={'md'}>
+        <Wrapper borderRadius={'md'}>
           <GeoLocation code={country.cca3.toLowerCase()} />
-        </Box>
+        </Wrapper>
       </SimpleGrid>
     </Box>
   );
