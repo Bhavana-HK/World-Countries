@@ -1,6 +1,6 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import { Box, Container, SimpleGrid, Flex } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { useMemo } from 'react';
 import { SwipeableHandlers, useSwipeable } from 'react-swipeable';
 import { Country } from 'src/components/Country';
@@ -12,27 +12,71 @@ import { shuffle } from '../utils/shuffle';
 import { ContextActionButton } from '../components/ContextActionButton';
 import { independantCountryIndexs } from '../resources/indCountryIdx';
 
+type state = {
+  index: number;
+  flag: boolean;
+};
+const initialState: state = {
+  index: 0,
+  flag: true,
+};
+
+const NEXT_CLICK = 'NEXT_CLICK';
+const PREV_CLICK = 'PREV_CLICK';
+
+interface nextClickAction {
+  type: typeof NEXT_CLICK;
+}
+
+interface prevClickAction {
+  type: typeof PREV_CLICK;
+}
+
+type actions = nextClickAction | prevClickAction;
+
+const reducer = (state = initialState, action: actions): state => {
+  switch (action.type) {
+    case NEXT_CLICK:
+      if (state.flag)
+        return {
+          ...state,
+          flag: false,
+        };
+      return {
+        index:
+          state.index + 1 >= independantCountryIndexs.length
+            ? 0
+            : state.index + 1,
+        flag: true,
+      };
+
+    case PREV_CLICK:
+      if (!state.flag)
+        return {
+          ...state,
+          flag: true,
+        };
+      return {
+        index:
+          state.index - 1 < 0
+            ? independantCountryIndexs.length - 1
+            : state.index - 1,
+        flag: false,
+      };
+    default:
+      return state;
+  }
+};
+
 export const InfiniteRoll: React.FC = () => {
-  const [indexPointer, setIndexPointer] = useState(0);
-  const [isFlag, setIsFlag] = useState(true);
-  const countryIndexes = useMemo(() => shuffle(independantCountryIndexs), []);
+  const [{ index, flag }, dispatch] = useReducer(reducer, initialState);
+  const shuffledIndexes = useMemo(() => shuffle(independantCountryIndexs), []);
 
-  const handleNext = () => {
-    if (!isFlag)
-      setIndexPointer((index) => {
-        if (index + 1 >= countryCodes.length) return 0;
-        return index + 1;
-      });
-    setIsFlag((flag) => !flag);
-  };
+  const handleNext = () =>
+    dispatch({ type: NEXT_CLICK });
 
-  const handlePrev = () => {
-    setIndexPointer((index) => {
-      if (index - 1 < 0) return 0;
-      return index - 1;
-    });
-    setIsFlag(true);
-  };
+  const handlePrev = () => 
+    dispatch({ type: PREV_CLICK });
 
   const handlers: SwipeableHandlers = useSwipeable({
     onSwipedLeft: (eventData) => {
@@ -47,19 +91,16 @@ export const InfiniteRoll: React.FC = () => {
 
   return (
     <Box pb={8} minH={'90vh'}>
-      {isFlag ? (
+      {flag ? (
         <div {...handlers}>
           <Container maxW="container.md">
             <Wrapper pt={8}>
-              <Flag code={countryCodes[countryIndexes[indexPointer]]} />
+              <Flag code={countryCodes[shuffledIndexes[index]]} />
             </Wrapper>
           </Container>
         </div>
       ) : (
-        <Country
-          countryIdx={countryIndexes[indexPointer]}
-          handlers={handlers}
-        />
+        <Country countryIdx={shuffledIndexes[index]} handlers={handlers} />
       )}
 
       <Container maxW="container.md">
@@ -70,7 +111,7 @@ export const InfiniteRoll: React.FC = () => {
               <ArrowLeftIcon /> &nbsp;Previous
             </ContextActionButton>
             <ContextActionButton onClick={handleNext} primary>
-              {isFlag ? 'Reveal Country' : 'Next'} &nbsp;
+              {flag ? 'Reveal Country' : 'Next'} &nbsp;
               <ArrowRightIcon />
             </ContextActionButton>
           </SimpleGrid>

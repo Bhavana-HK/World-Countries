@@ -36507,30 +36507,6 @@ const countries: CountryType[] = [
         name: 'Botswana pula',
         symbol: 'P',
       },
-      CNY: {
-        name: 'Chinese yuan',
-        symbol: '\u00a5',
-      },
-      EUR: {
-        name: 'Euro',
-        symbol: '\u20ac',
-      },
-      GBP: {
-        name: 'British pound',
-        symbol: '\u00a3',
-      },
-      INR: {
-        name: 'Indian rupee',
-        symbol: '\u20b9',
-      },
-      JPY: {
-        name: 'Japanese yen',
-        symbol: '\u00a5',
-      },
-      USD: {
-        name: 'United States dollar',
-        symbol: '$',
-      },
       ZAR: {
         name: 'South African rand',
         symbol: 'Rs',
@@ -36556,14 +36532,6 @@ const countries: CountryType[] = [
       ndc: 'Ndau',
       nde: 'Northern Ndebele',
       nya: 'Chewa',
-      sna: 'Shona',
-      sot: 'Sotho',
-      toi: 'Tonga',
-      tsn: 'Tswana',
-      tso: 'Tsonga',
-      ven: 'Venda',
-      xho: 'Xhosa',
-      zib: 'Zimbabwean Sign Language',
     },
     translations: {
       ces: {

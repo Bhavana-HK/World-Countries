@@ -1,27 +1,19 @@
-import {
-  Text,
-
-
-
-
-
-
-  HStack,
-  Tag
-} from '@chakra-ui/react';
+import { Text, Box, Tag } from '@chakra-ui/react';
 import React from 'react';
 import { Langauages } from '../Country';
 
-export const LanguagesComponent: React.FC<{ lang: Langauages; }> = ({ lang }) => {
+export const LanguagesComponent: React.FC<{ lang: Langauages }> = ({
+  lang,
+}) => {
   const keys = Object.keys(lang);
 
   return (
-    <HStack spacing={4}>
+    <Box display={'block'}>
       {keys.map((key) => (
-        <Tag size={'md'} key={key} variant="solid" colorScheme="cyan">
+        <Tag size={'md'} key={key} variant="solid" colorScheme="cyan" m={1} mr={2}>
           <Text>{lang[key]}</Text>
         </Tag>
       ))}
-    </HStack>
+    </Box>
   );
 };
