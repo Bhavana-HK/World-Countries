@@ -7,13 +7,13 @@ export const CurrencyComponent: React.FC<{ curr: Currencies }> = ({ curr }) => {
   return (
     <Box display={'block'}>
         {keys.map((key) => (
-          <Box display={'inline-block'} m={1} mr={3} key={key}>
+          <Box display={'inline-block'} mr={2} key={key}>
             <Tag
               size={'md'}
               key={curr[key].name}
               variant="solid"
               colorScheme="cyan"
-              mr={2}
+              m={1}
             >
               <Text>
                 {curr[key].name}
@@ -28,7 +28,7 @@ export const CurrencyComponent: React.FC<{ curr: Currencies }> = ({ curr }) => {
                 </span>
               </Text>
             </Tag>
-            <Tag size={'md'} key={key} variant="outline" colorScheme="cyan">
+            <Tag size={'md'} key={key} variant="outline" colorScheme="cyan" m={1}>
               <Text fontWeight="extrabold">{curr[key].symbol}</Text>
             </Tag>
           </Box>
