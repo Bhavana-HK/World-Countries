@@ -18,8 +18,6 @@ export const InfiniteRoll: React.FC = () => {
   const [{ index, flag }, dispatch] = useReducer(reducer, initialState);
   const shuffledIndexes = useMemo(() => shuffle(independantCountryIndexs), []);
 
-  console.log(index);
-
   const handleNext = () => dispatch({ type: NEXT_CLICK });
   const handlePrev = () => dispatch({ type: PREV_CLICK });
 

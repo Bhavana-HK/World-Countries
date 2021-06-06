@@ -44,7 +44,7 @@ export const Flag: React.FC<FlagProps> = ({ code }) => {
 
   return (
     <ErrorBoundary>
-      <Image src={image} alt={`${code}-img`} w="100%" h="auto" />
+      <Image src={image} alt={`country-img`} w="100%" h="auto" />
     </ErrorBoundary>
   );
 };
