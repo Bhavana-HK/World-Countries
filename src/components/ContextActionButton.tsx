@@ -6,7 +6,7 @@ export const ContextActionButton: React.FC<
 > = ({ primary, ...props }) => {
   const { colorMode } = useColorMode();
   const primaryColor = colorMode === 'light' ? 'cyan.100' : 'cyan.900';
-  const secondaryColor = colorMode === 'light' ? 'gray.200' : 'gray.800';
+  const secondaryColor = colorMode === 'light' ? 'gray.200' : 'gray.700';
   return (
     <Button
       bg={primary ? primaryColor : secondaryColor}

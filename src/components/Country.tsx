@@ -10,7 +10,6 @@ import {
   Grid,
   useColorMode,
 } from '@chakra-ui/react';
-
 import React from 'react';
 import countries from '../resources/countries';
 import { GeoLocation } from './GeoLocation';
@@ -94,7 +93,7 @@ export const Country: React.FC<CountryProps> = ({ countryIdx, handlers }) => {
           </Wrapper>
         </div>
         <Wrapper borderRadius={'md'} paddingX={5}>
-          <div style={{ touchAction: 'none'}}>
+          <div style={{ touchAction: 'none' }}>
             <GeoLocation code={country.cca3.toLowerCase()} />
           </div>
         </Wrapper>
