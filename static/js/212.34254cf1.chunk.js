@@ -1,0 +1,2 @@
+(this["webpackJsonpworld-countries"]=this["webpackJsonpworld-countries"]||[]).push([[212],{574:function(s,t,c){"use strict";c.r(t),t.default=c.p+"static/media/svn.5995c546.svg"}}]);
+//# sourceMappingURL=212.34254cf1.chunk.js.map

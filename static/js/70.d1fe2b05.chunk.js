@@ -1,0 +1,2 @@
+(this["webpackJsonpworld-countries"]=this["webpackJsonpworld-countries"]||[]).push([[70],{432:function(s,t,e){"use strict";e.r(t),t.default=e.p+"static/media/eri.23a099eb.svg"}}]);
+//# sourceMappingURL=70.d1fe2b05.chunk.js.map

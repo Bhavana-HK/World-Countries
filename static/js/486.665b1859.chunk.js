@@ -1,0 +1,2 @@
+(this["webpackJsonpworld-countries"]=this["webpackJsonpworld-countries"]||[]).push([[486],{348:function(e){e.exports=JSON.parse('{"type":"FeatureCollection","features":[{"properties":{"cca2":""}}]}')}}]);
+//# sourceMappingURL=486.665b1859.chunk.js.map

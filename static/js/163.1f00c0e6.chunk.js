@@ -1,2 +1,0 @@
-(this["webpackJsonpworld-countries"]=this["webpackJsonpworld-countries"]||[]).push([[163],{513:function(s,t,c){"use strict";c.r(t),t.default=c.p+"static/media/ncl.19951f1b.svg"}}]);
-//# sourceMappingURL=163.1f00c0e6.chunk.js.map
